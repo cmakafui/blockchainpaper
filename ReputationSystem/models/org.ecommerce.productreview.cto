@@ -1,0 +1,96 @@
+namespace org.ecommerce.productreview
+
+/**
+ * States
+ */
+enum ValidationStatus {
+  o Valid
+  o Off
+  o Invalid
+}
+
+enum UpdateStatus {
+  o Updated
+  o Off
+}
+
+enum FlaggedStatus {
+  o Flagged
+  o Off
+}
+
+/**
+ * Participants
+ */
+
+
+abstract participant User identified by userId {
+  o String userId
+  o String device
+}
+
+participant Customer extends User {
+
+}
+
+participant Seller extends User {
+
+}
+
+participant Independent extends User {
+
+}
+
+/**
+ * Assets
+ */
+asset Review identified by reviewId {
+  o String reviewId
+  o String listingId
+  --> Listing listing
+  o String reviewText
+  o Double rating
+  o ValidationStatus validationStatus
+  o UpdateStatus updateStatus
+  o FlaggedStatus flaggedStatus
+  --> Customer customer
+}
+
+asset Listing identified by listingId {
+  o String listingId
+  o String productName
+  --> Seller seller
+
+}
+
+/**
+ * Transactions
+ */
+
+// transaction CreateListing {
+//   --> Listing listing
+// }
+
+transaction SubmitReview {
+  --> Review review
+  o ValidationStatus validationStatus
+}
+
+transaction ValidateReview {
+  --> Review review
+  o ValidationStatus validationStatus
+}
+
+transaction UpdateReview {
+  --> Review review
+  o String reviewText
+  o Double rating
+  o UpdateStatus updateStatus
+}
+
+transaction FlagReview {
+  --> Review review
+  o FlaggedStatus flaggedStatus
+  o String reason
+}
+

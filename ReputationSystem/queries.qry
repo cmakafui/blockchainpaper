@@ -1,0 +1,48 @@
+query selectReviewByIdentifier {
+	description: "Get a Review"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE (reviewId == _$reviewId)
+}
+
+query selectListingByIdentifier {
+	description: "Get a Listing"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE (listingId == _$listingId)
+}
+
+query selectReviewsByCustomer {
+	description: "Get all submitted reviews from a certain customer"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE ((customer == _$customerId) AND (rating > 0))
+}
+
+query selectListingBySeller {
+	description: "Get all submitted listings from a certain seller"
+	statement:
+		SELECT org.ecommerce.productreview.Listing
+			WHERE (seller == _$sellerId)
+}
+
+query selectValidatedReviewsByListing {
+	description: "Select all validated reviews of a product"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE ((listing == _$listingId) AND (validationStatus == "Valid"))
+}
+
+query selectUpdatedReviewsByListing {
+	description: "Select all updated reviews of a product"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE ((listing == _$listingId) AND (updateStatus == "Updated"))
+}
+
+query selectFlaggedReviewsByListing {
+	description: "Select all flagged reviews of a product"
+	statement:
+		SELECT org.ecommerce.productreview.Review
+			WHERE ((listing == _$listingId) AND (flaggedStatus == "Flagged"))
+}
